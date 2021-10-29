@@ -1,8 +1,5 @@
 import React from 'react';
-import SceneHome from './sceneHome';
-import SceneGame from './sceneGame';
-import SceneSplash from './sceneSplash';
-import SceneLoading from './sceneLoading';
+import SCENES from '../lib/Scenes';
 import sceneTransitionFade from '../lib/sceneTransitionsFade';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -12,11 +9,10 @@ const stackOptions = { cardStyleInterpolator: sceneTransitionFade };
 
 const SceneManager = () => (
   <NavigationContainer>
-    <Stack.Navigator initialRouteName='Splash' screenOptions={{ headerShown: false }}>
-      <Stack.Screen name='Splash' component={SceneSplash} options={stackOptions} />
-      <Stack.Screen name='Loading' component={SceneLoading} options={stackOptions} />
-      <Stack.Screen name='Home' component={SceneHome} options={stackOptions} />
-      <Stack.Screen name='Game' component={SceneGame} options={stackOptions} />
+    <Stack.Navigator initialRouteName={SCENES[0].name} screenOptions={{ headerShown: false }}>
+      {SCENES.map(({ name, component }) => (
+        <Stack.Screen key={`scene-${name}-key`} name={name} component={component} options={stackOptions} />
+      ))}
     </Stack.Navigator>
   </NavigationContainer>
 );
